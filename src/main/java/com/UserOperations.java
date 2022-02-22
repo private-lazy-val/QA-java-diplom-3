@@ -2,6 +2,8 @@ package com;
 
 import com.model.Tokens;
 import com.model.UserRegisterResponse;
+import io.qameta.allure.Step;
+import io.restassured.response.ValidatableResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.HashMap;
@@ -58,6 +60,24 @@ public class UserOperations {
             Tokens.setRefreshToken(response.getRefreshToken());
         }
         return responseData;
+    }
+
+    // логиним пользователя для последующего удаления
+    public void loginUserAndSaveToken(String email, String password) {
+        Map<String, String> loginData = new HashMap<>();
+        loginData.put("email", email);
+        loginData.put("password", password);
+        UserRegisterResponse response = given()
+                .spec(Base.getBaseSpec())
+                .and()
+                .body(loginData)
+                .when()
+                .post("auth/login")
+                .body()
+                .as(UserRegisterResponse.class);
+
+        Tokens.setAccessToken(response.getAccessToken().substring(7));
+        Tokens.setRefreshToken(response.getRefreshToken());
     }
 
     /*
