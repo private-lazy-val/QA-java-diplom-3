@@ -15,6 +15,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Map;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.page;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -73,7 +74,7 @@ public class LoginTest {
         LoginPage loginPage = page(LoginPage.class);
         loginPage.loginUser(email, password);
 
-        mainPage.checkCreateOrderButtonIsVisible();
+        mainPage.getCreateOrderButton().shouldBe(visible);
     }
 
     @Test
@@ -85,7 +86,7 @@ public class LoginTest {
         LoginPage loginPage = page(LoginPage.class);
         loginPage.loginUser(email, password);
 
-        mainPage.checkCreateOrderButtonIsVisible();
+        mainPage.getCreateOrderButton().shouldBe(visible);
     }
 
     @Test
@@ -100,7 +101,7 @@ public class LoginTest {
         registerPage.clickLogInButton();
         loginPage.loginUser(email, password);
 
-        mainPage.checkCreateOrderButtonIsVisible();
+        mainPage.getCreateOrderButton().shouldBe(visible);
     }
 
     @Test
@@ -115,6 +116,6 @@ public class LoginTest {
         forgotPassword.clickLogInButton();
         loginPage.loginUser(email, password);
 
-        mainPage.checkCreateOrderButtonIsVisible();
+        mainPage.getCreateOrderButton().shouldBe(visible);
     }
 }

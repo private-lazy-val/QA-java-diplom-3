@@ -5,8 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Condition.visible;
-
 public class MainPage {
 
     public static final String URL = "https://stellarburgers.nomoreparties.site/";
@@ -64,23 +62,23 @@ public class MainPage {
         fillingsSection.click();
     }
 
-    public void checkBunsBlockIsVisible() {
-        BunsBlock.shouldBe(visible);
+    public SelenideElement getBunsBlock() {
+        return BunsBlock;
     }
 
-    public void checkSaucesBlockIsVisible() {
-        SaucesBlock.shouldBe(visible);
+    public SelenideElement getSaucesBlock() {
+        return SaucesBlock;
     }
 
-    public void checkFillingsBlockIsVisible() {
-        FillingsBlock.shouldBe(visible);
+    public SelenideElement getFillingsBlock() {
+        return FillingsBlock;
     }
 
-    public void checkCreateOrderButtonIsVisible() {
-        createOrderButton.shouldBe(visible);
+    public SelenideElement getCreateOrderButton() {
+        return createOrderButton;
     }
 
-    public void checkAssembleBurgerTextIsVisible() {
-        assembleBurgerText.shouldBe(visible);
+    public SelenideElement getAssembleBurgerText() {
+        return assembleBurgerText;
     }
 }

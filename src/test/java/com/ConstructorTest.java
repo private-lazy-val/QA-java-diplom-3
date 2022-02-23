@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -41,7 +42,6 @@ public class ConstructorTest {
         mainPage = open(MainPage.URL, MainPage.class);
     }
 
-
     @After
     public void tearDown() {
         getWebDriver().quit();
@@ -55,7 +55,7 @@ public class ConstructorTest {
         // Кликаем на раздел с соусами для того, чтобы потом "перейти" (это слово используется в задании) в раздел с булками
         mainPage.clickSaucesSection();
         mainPage.clickBunsSection();
-        mainPage.checkBunsBlockIsVisible();
+        mainPage.getBunsBlock().shouldBe(visible);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ConstructorTest {
         oLifecycle.updateTestCase(testResult -> testResult.setName("Check 'Sauces' block is visible with " + testName));
 
         mainPage.clickSaucesSection();
-        mainPage.checkSaucesBlockIsVisible();
+        mainPage.getSaucesBlock().shouldBe(visible);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class ConstructorTest {
         oLifecycle.updateTestCase(testResult -> testResult.setName("Check 'Fillings' block is visible with " + testName));
 
         mainPage.clickFillingsSection();
-        mainPage.checkFillingsBlockIsVisible();
+        mainPage.getFillingsBlock().shouldBe(visible);
     }
 }

@@ -54,7 +54,7 @@ public class RegisterPage {
         logInButton.click();
     }
 
-    public void checkInvalidPasswordErrorMessageIsVisible() {
-        invalidPasswordErrorMessage.shouldBe(visible);
+    public SelenideElement getInvalidPasswordErrorMessage() {
+        return invalidPasswordErrorMessage;
     }
 }

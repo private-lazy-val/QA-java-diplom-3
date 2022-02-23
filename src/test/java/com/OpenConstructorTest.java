@@ -14,6 +14,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Map;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.page;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -76,6 +77,6 @@ public class OpenConstructorTest {
         AccountProfilePage accountProfile = page(AccountProfilePage.class);
         accountProfile.clickConstructorButton();
 
-        mainPage.checkAssembleBurgerTextIsVisible();
+        mainPage.getAssembleBurgerText().shouldBe(visible);
     }
 }

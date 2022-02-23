@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class RegisterTest {
@@ -27,6 +27,9 @@ public class RegisterTest {
     private final String EMAIL = "@yandex.ru";
     private final String testName;
     private final String pathToDriver;
+
+    private String email;
+    private String password;
 
     AllureLifecycle oLifecycle = Allure.getLifecycle();
 
@@ -53,6 +56,12 @@ public class RegisterTest {
     @After
     public void tearDown() {
         getWebDriver().quit();
+        if (email != null) {
+            // Логиним пользователя для последующего удаления
+            userOperations.loginUserAndSaveToken(email, password);
+            // Удаляем пользователя
+            userOperations.delete();
+        }
     }
 
     @Test
@@ -64,17 +73,12 @@ public class RegisterTest {
         LoginPage loginPage = page(LoginPage.class);
         loginPage.clickRegisterButton();
         String name = RandomStringUtils.randomAlphabetic(10);
-        String email = RandomStringUtils.randomAlphabetic(10) + EMAIL;
-        String password = RandomStringUtils.randomAlphabetic(6);
+        email = RandomStringUtils.randomAlphabetic(10) + EMAIL;
+        password = RandomStringUtils.randomAlphabetic(6);
         RegisterPage registerPage = page(RegisterPage.class);
         registerPage.registerNewUser(name, email, password);
 
         webdriver().shouldHave(url(LoginPage.URL));
-
-        // Логиним пользователя для последующего удаления
-        userOperations.loginUserAndSaveToken(email, password);
-        // Удаляем пользователя
-        userOperations.delete();
     }
 
     @Test
@@ -90,6 +94,7 @@ public class RegisterTest {
         String password = RandomStringUtils.randomAlphabetic(5);
         RegisterPage registerPage = page(RegisterPage.class);
         registerPage.registerNewUser(name, email, password);
-        registerPage.checkInvalidPasswordErrorMessageIsVisible();
+
+        registerPage.getInvalidPasswordErrorMessage().shouldBe(visible);
     }
 }
